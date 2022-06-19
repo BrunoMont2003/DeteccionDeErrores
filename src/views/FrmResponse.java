@@ -1,6 +1,7 @@
 package views;
 
 import algorithms.SumaDeVerificacion;
+import algorithms.VerificacionDeRedundanciaCiclica;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,6 +54,10 @@ public class FrmResponse extends JFrame {
                 break;
             case 4:
                 //redundancia cíclica
+                VerificacionDeRedundanciaCiclica crc = new VerificacionDeRedundanciaCiclica();
+                int residuo1 = crc.residuoEnviado(mensajeOriginal);
+                int residuo2 = crc.residuoRecibido(mensajeModificado);
+                mensajeRecibidoExitosamente = crc.receivedMessage(residuo1, residuo2);
         }
         if (mensajeRecibidoExitosamente) {
             lblTitulo.setText("¡Mensaje recibido con éxito!");
