@@ -1,4 +1,5 @@
 package algorithms;
+import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
 
 public class VerificacionDeRedundanciaCiclica {
@@ -13,7 +14,7 @@ public class VerificacionDeRedundanciaCiclica {
         return decimal;
     }
 
-    public int residuo (byte[] datos, String mensaje, BitSet bits){
+    public int residuo (BitSet bits){
         int P = decimal(bits); // Mensaje en decimal para realizar la operación de cálculo del residuo
         int G = 8; // Divisor de 4 bits 1001
         int residuo;
@@ -22,23 +23,23 @@ public class VerificacionDeRedundanciaCiclica {
     }
 
     public int residuoEnviado (String mensajeEnviado){
-        byte [] datos = mensajeEnviado.getBytes();
+        byte [] datos = mensajeEnviado.getBytes(StandardCharsets.UTF_8);
         BitSet bitSet = BitSet.valueOf(datos); //Mensaje en binario
         int ax = decimal(bitSet);
         System.out.println("Bits enviados: "+Integer.toBinaryString(ax));
         int residuo;
-        residuo = residuo(datos, mensajeEnviado, bitSet);
+        residuo = residuo(bitSet);
         System.out.println("Residuo de la division "+Integer.toBinaryString(ax)+"/"+"1000: "+residuo);
         return residuo;
     }
 
     public int residuoRecibido (String mensajeRecibido){
-        byte [] datos = mensajeRecibido.getBytes();
+        byte [] datos = mensajeRecibido.getBytes(StandardCharsets.UTF_8);
         BitSet bitSet = BitSet.valueOf(datos); //Mensaje en binario
         int ax = decimal(bitSet);
         System.out.println("Bits recibidos: "+Integer.toBinaryString(ax));
         int residuo;
-        residuo = residuo(datos, mensajeRecibido, bitSet);
+        residuo = residuo(bitSet);
         System.out.println("Residuo de la division "+Integer.toBinaryString(ax)+"/"+"1000: "+residuo);
         System.out.println("-----------------------------------------------------");
         return residuo;
