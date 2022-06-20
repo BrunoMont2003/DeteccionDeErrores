@@ -3,7 +3,7 @@ package algorithms;
 public class SumaDeVerificacion {
     private int nBits;
 
-    public void setnBits(String message) {
+    public void setBits(String message) {
         this.nBits = message.length() == 1 ? 2 : message.length() < 3 ? 8 : 16;
     }
 
@@ -78,52 +78,45 @@ public class SumaDeVerificacion {
     public String binarySum(String[] array) {
         int result = 0;
         for (int i = 0; i < getLength(array); i++) {
-            try {
-                int element = Integer.parseInt(array[i], 2);
-                result += element;
-
-            } catch (Exception e) {
-                System.out.println("here the element is void: " + array[i]);
-                System.out.println("ERROR: " + e.getMessage());
-            }
+            int element = Integer.parseInt(array[i], 2);
+            result += element;
         }
         return Integer.toString(result, 2);
     }
 
     public String addCarryToSum(String sum) {
-        try {
-
-            if (sum.length() < nBits) {
-                return sum;
-            }
-            String carry = sum.substring(0, sum.length() - nBits);
-            // System.out.println("The carry is" + carry);
-            if (carry.equals(""))
-                return sum;
-
-            String sumWithOutCarry = sum.substring(sum.length() - nBits);
-            String[] array = {carry, sumWithOutCarry};
-            String newSum = binarySum(array);
-            return completeWithZeros(newSum, nBits);
-        } catch (Exception e) {
-            System.out.println("ERROR " + e.getMessage());
-            return "";
+        if (sum.length() < nBits) {
+            return sum;
         }
+        String carry = sum.substring(0, sum.length() - nBits);
+        if (carry.equals(""))
+            return sum;
+        String sumWithOutCarry = sum.substring(sum.length() - nBits);
+        String[] array = {carry, sumWithOutCarry};
+        String newSum = binarySum(array);
+        return completeWithZeros(newSum, nBits);
     }
 
     public String checksum(String text) {
         String binaryChain = textToBinary(text);
-        System.out.println(binaryChain);
+        System.out.println("Data to be transmitted: " + binaryChain);
         // k blocks of n bits
         String[] blocks = getKBlocksOfNBits(binaryChain, nBits);
         // get the binary sum
+        System.out.println("Blocks");
+        for (String block : blocks) {
+            if (block != null)
+                System.out.println(block);
+        }
         String binarySum = binarySum(blocks);
-        System.out.println("binarySum " + binarySum);
+        System.out.println("Sum of these blocks " + binarySum);
         // add the carry to the sum
         String sumPlusCarry = addCarryToSum(binarySum);
-        System.out.println("sumPlusCarry " + sumPlusCarry);
+        System.out.println("Final sum (carry added if exists) " + sumPlusCarry);
         // 1's complement
-        return getOnesComplement(sumPlusCarry);
+        String checksum = getOnesComplement(sumPlusCarry);
+        System.out.println("Checksum " + checksum);
+        return checksum;
     }
 
     public String messageToSend(String message, String checksum) {
@@ -140,7 +133,8 @@ public class SumaDeVerificacion {
         String binarySum = binarySum(blocks);
         String sumPlusCarry = addCarryToSum(binarySum);
         System.out.println("-------------------------");
-        System.out.println("final sum " + sumPlusCarry);
+        System.out.println("Message + checksum " + sumPlusCarry);
+        //return true if all the bits are ones or false if there is at least one zero
         return areAllOnes(sumPlusCarry);
     }
 }

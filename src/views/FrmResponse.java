@@ -47,7 +47,7 @@ public class FrmResponse extends JFrame {
             case 3:
                 //suma de verificacion
                 SumaDeVerificacion metodo = new SumaDeVerificacion();
-                metodo.setnBits(mensajeOriginal);
+                metodo.setBits(mensajeOriginal);
                 String checksum = metodo.checksum(mensajeOriginal);
                 String mensajeEnviado = metodo.messageToSend(mensajeModificado, checksum);
                 mensajeRecibidoExitosamente = metodo.receivedMessage(mensajeEnviado);
