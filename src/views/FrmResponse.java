@@ -1,7 +1,9 @@
 package views;
 
 import algorithms.SumaDeVerificacion;
+import algorithms.VerificacionDeParidad;
 import algorithms.VerificacionDeRedundanciaCiclica;
+import algorithms.VerificacionRedundanciaLongitudinal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,10 +41,17 @@ public class FrmResponse extends JFrame {
         // logic
         switch (algoritmo) {
             case 1:
-                //
+                VerificacionDeParidad m = new VerificacionDeParidad();
+                String c1=m.sended(mensajeOriginal);
+                String c2=m.messageToSend(mensajeModificado);
+                mensajeRecibidoExitosamente=m.receivedMessage(mensajeOriginal,mensajeModificado);
+
                 break;
             case 2:
-                //redundancia longitudinal
+                VerificacionRedundanciaLongitudinal ml = new VerificacionRedundanciaLongitudinal();
+                String l1=ml.sended(mensajeOriginal);
+                String l2=ml.messageToSend(mensajeModificado);
+                mensajeRecibidoExitosamente=ml.receivedMessage(mensajeOriginal,mensajeModificado);
                 break;
             case 3:
                 //suma de verificacion
